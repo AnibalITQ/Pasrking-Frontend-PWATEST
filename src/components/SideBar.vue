@@ -1,181 +1,149 @@
 <template>
-    <aside :class="`${is_expanded ? 'is-expanded' : ''}`">
-      <div class="logo">
-          <img src="../assets/logoxd.png" alt="Vue" /> 
-      </div>
-  
-      <div class="menu-toggle-wrap">
-          <button class="menu-toggle" @click="ToggleMenu">
-              <span class="material-icons">api</span>
-          </button>
-      </div>
-  
-      <h3>Menu</h3>
+  <div class="sidebar-container">
+    <!-- Overlay que difumina el fondo -->
+    <div
+      class="overlay"
+      :class="{ 'is-visible': is_expanded }"
+      @click="ToggleMenu"
+    ></div>
+
+    <!-- Sidebar -->
+    <aside :class="{ 'is-expanded': is_expanded }">
       <div class="menu">
-          <router-link class="button" to="/">
-              <span class="material-icons">home</span>
-              <span class="text">Home</span>
-          </router-link>
-          <router-link class="button" to="/about">
-              <span class="material-icons">directions_car</span>
-              <span class="text">Estacionamiento</span>
-          </router-link>
-          <router-link class="button" to="/Perfil">
-              <span class="material-icons">person</span>
-              <span class="text">Perfil</span>
-          </router-link>
-          <router-link class="button" to="/Reportes">
-              <span class="material-icons">flag</span>
-              <span class="text">Reportes</span>
-          </router-link>
-      </div>
-  
-      <div class="flex"></div>
-  
-      <div class="menu">
-          <router-link class="button" to="/Settings">
-              <span class="material-icons">settings</span>
-              <span class="text">Settings</span>
-          </router-link>
+        <div class="logo">
+            <img src="../assets/logoxd.png" alt="parking-logo" class="w-20 h-auto" />
+        </div>
+        <h3>Menu</h3>
+        <router-link class="button" to="/home">
+          <span class="material-icons">home</span>
+          <span class="text">Home</span>
+        </router-link>
+        <router-link class="button" to="/about">
+          <span class="material-icons">directions_car</span>
+          <span class="text">Estacionamiento</span>
+        </router-link>
+        <router-link class="button" to="/Perfil">
+          <span class="material-icons">person</span>
+          <span class="text">Perfil</span>
+        </router-link>
+        <router-link class="button" to="/Reportes">
+          <span class="material-icons">flag</span>
+          <span class="text">Reportes</span>
+        </router-link>
       </div>
     </aside>
-  </template>
-  
-  <script setup>
-      import {ref} from 'vue'
-      const is_expanded = ref(localStorage.getItem("is_expanded") === "true")
-  
-      const ToggleMenu = () => {
-          is_expanded.value = !is_expanded.value
-          localStorage.setItem("is_expanded", is_expanded.value)
+
+    <!-- Botón del menú -->
+    <button
+      class="menu-toggle"
+      :class="{ 'is-expanded': is_expanded }"
+      @click="ToggleMenu"
+    >
+      <span class="material-icons">api</span>
+    </button>
+  </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+const is_expanded = ref(false);
+
+const ToggleMenu = () => {
+  is_expanded.value = !is_expanded.value;
+};
+</script>
+
+<style lang="scss" scoped>
+.sidebar-container {
+  position: relative;
+
+  /* Fondo difuminado */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 100;
+  }
+
+  .overlay.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  aside {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background-color: var(--dark);
+    overflow: hidden;
+    transition: width 0.3s ease-out;
+    z-index: 200;
+    &.is-expanded {
+      width: 300px; /* Tamaño del menú expandido */
+    }
+
+    .menu {
+      padding: 1rem;
+
+      h3 {
+        color: var(--light);
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
       }
-  </script>
-  
-  <style lan="scss" scoped>
-      aside {
-          display: flex;
-          flex-direction: column;
-          width: calc(2rem + 32px);
-          min-height: 100vh;
-          overflow: hidden;
-          padding: 1rem;
-  
-          background-color: var(--dark);
+
+      .button {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.5rem;
+        text-decoration: none;
+        color: var(--light);
+        transition: background-color 0.2s ease;
+
+        .material-icons {
+          font-size: 1.5rem;
           color: var(--light);
-  
-          transition: 0.2s ease-out;
-  
-          .flex {
-              flex: 1 1 0;
+        }
+
+        &:hover {
+          background-color: var(--grey);
+          .material-icons {
+            color: var(--primary);
           }
-  
-          .logo {
-              margin-bottom: 1rem;
-              img {
-                  width: 2rem;
-              }
-          }
-  
-          .menu-toggle-wrap {
-              display: flex;
-              justify-content: flex-end;
-              margin-bottom: 1rem;
-  
-              position: relative;
-              top: 0;
-              transition: 0.2s ease-out;
-  
-              .menu-toggle {
-                  transition: 0.2s ease-out;
-  
-                  .material-icons {
-                      font-size: 2rem;
-                      color: var(--light);
-                      transition: 0.2s ease-out;
-                  }
-  
-                  &:hover {
-                      .material-icons {
-                          color: var(--primary);
-                          transform: translateX(0.5rem);
-                      }
-                  }
-              }
-          }
-          
-          h3, .button .text {
-              opacity: 0;
-              transition: 0.3s ease-out;
-          }
-  
-          h3 {
-              color: var(--grey);
-              font-size: 0.875rem;
-              margin-bottom: 0.5rem;
-              text-transform: uppercase;
-          }
-  
-          .menu {
-              margin: 0 -1rem;
-              .button {
-                  display: flex;
-                  align-items: center;
-                  text-decoration: none;
-  
-                  padding: 0.5rem 1rem;
-                  transition: 0.2s ease-out;
-  
-                  .material-icons {
-                      font-size: 2rem;
-                      color: var(--light);
-                      margin-right: 1rem;
-                      transition: 0.2s ease-out;
-                  }
-  
-                  .text {
-                      color: var(--light);
-                      transition: 0.2s ease-out;
-                  }
-  
-                  &:hover, ~&.router-link-exact-active {
-                      background-color: var(--dark-alt);
-  
-                      .material-icons, .text {
-                          color: var(--primary);
-                      }
-                  }
-  
-                  &.router-link-exact-active {
-                      border-right: 5px solid var(--primary);
-                  }
-              }
-  
-          }
-  
-          &.is-expanded {
-              width: var(--sidebar-width);
-  
-              .menu-toggle-wrap {
-                  top: -3rem;
-                  .menu-toggle {
-                      transform: rotate(-45deg);
-                  }
-              }
-  
-              h3, .button .text {
-                  opacity: 1;
-              }
-  
-              .button {
-                  .material-icons {
-                      margin-right: 1rem;
-                  }
-              }
-          }
-  
-          @media (max-width: 768px){
-              position: fixed;
-              z-index: 99;
-          }
+        }
       }
-  </style>
+    }
+  }
+
+  .menu-toggle {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 200; /* Asegurar que esté encima del menú */
+    transition: transform 0.3s ease-out;
+
+    .material-icons {
+      font-size: 2rem;
+      color: var(--light-orange);
+    }
+
+    /* Animación del botón */
+    &.is-expanded {
+      transform: translateX(300px); /* Mover el botón fuera del menú */
+    }
+  }
+}
+</style>

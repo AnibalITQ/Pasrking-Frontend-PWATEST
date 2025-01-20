@@ -5,12 +5,12 @@
     <!-- Contenedor para el texto fuera de la caja blanca -->
     <h1
       class="absolute left-1/2 transform -translate-x-1/2 text-3xl font-bold text-center text-[#F2A14E] mb-4"
-      style="top: 200px"
+      style="top: 7.5%"
     >
       PARKING ITQ
     </h1>
 
-    <div class="w-full sm:w-96 bg-white rounded-3xl shadow-lg p-8 mt-16">
+    <div class="w-full sm:w-96 bg-white rounded-3xl shadow-lg p-8 mt-[10%]">
       <h2 class="text-2xl font-semibold text-center mb-6">INICIAR SESIÓN</h2>
 
       <form @submit.prevent="handleSubmit" class="space-y-6">
