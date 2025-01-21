@@ -1,6 +1,10 @@
 <template>
-  <div class="min-h-screen w-full bg-gray-100 flex items-center justify-center p-4">
-    <div class="bg-white rounded-lg shadow-lg overflow-y-auto w-full max-w-md h-[80vh] sm:h-[70vh] min-h-[500px] mx-auto">
+  <div
+    class="min-h-screen w-full bg-gray-100 flex items-center justify-center p-4"
+  >
+    <div
+      class="bg-white rounded-lg shadow-lg overflow-y-auto w-full max-w-md h-[80vh] sm:h-[70vh] min-h-[500px] mx-auto"
+    >
       <!-- Header -->
       <div class="p-4 text-[#2E4057] flex items-center justify-center">
         <h1 class="text-2xl sm:text-xl font-semibold">{{ welcomeMessage }}</h1>
@@ -9,25 +13,26 @@
         <p class="text-xl sm:text-lg text-[#396296]">{{ status }}</p>
       </div>
       <!-- QR Code Gallery -->
-      <div class="qr-image-container relative aspect-square w-full max-w-[300px] mx-auto my-4 sm:my-2">
-        <div class="absolute inset-0">
-          <transition-group name="fade">
-            <img
-              v-for="(image, index) in qrImages"
-              :key="image.url"
-              :src="image.url"
-              :alt="image.alt"
-              v-show="currentImageIndex === index"
-              class="w-full h-full object-contain"
-              @click="nextImage"
-            />
-          </transition-group>
-        </div>
+      <div
+        class="qr-image-container relative aspect-square w-full max-w-[300px] mx-auto my-4 sm:my-2"
+      >
+        <transition name="fade" mode="out-in">
+          <img
+            v-if="currentImageIndex !== null"
+            :key="qrImages[currentImageIndex].url"
+            :src="qrImages[currentImageIndex].url"
+            :alt="qrImages[currentImageIndex].alt"
+            class="w-full h-full object-contain"
+            @click="nextImage"
+          />
+        </transition>
       </div>
       <!-- Parking Information -->
       <div class="p-4">
         <div class="mb-4">
-          <h2 class="text-2xl sm:text-xl font-bold text-gray-800">{{ plate }}</h2>
+          <h2 class="text-2xl sm:text-xl font-bold text-gray-800">
+            {{ plate }}
+          </h2>
           <p class="text-gray-600">{{ vehicleInfo }}</p>
         </div>
 
@@ -39,22 +44,28 @@
             class="flex justify-between items-center"
           >
             <span class="text-gray-700">{{ location.name }}</span>
-            <span class="text-gray-900">{{ location.available }} Disponibles</span>
+            <span class="text-gray-900"
+              >{{ location.available }} Disponibles</span
+            >
           </div>
         </div>
       </div>
 
-      <!-- Bottom Navigation
-      <div class="flex justify-around items-center p-4 border-t border-gray-200">
-        <button class="flex flex-col items-center text-gray-600">
-          <CarIcon class="h-6 w-6" />
-          <span class="text-xs">Estacionamiento</span>
+      <!-- Carousel Navigation Buttons -->
+      <div class="flex justify-between p-4 border-t border-gray-200">
+        <button
+          @click="previousImage"
+          class="text-gray-600 p-2 rounded-lg hover:bg-gray-200"
+        >
+          Anterior
         </button>
-        <button class="flex flex-col items-center text-gray-600">
-          <UserIcon class="h-6 w-6" />
-          <span class="text-xs">Usuario</span>
+        <button
+          @click="nextImage"
+          class="text-gray-600 p-2 rounded-lg hover:bg-gray-200"
+        >
+          Siguiente
         </button>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
@@ -78,8 +89,8 @@ interface QRImage {
 const welcomeMessage = ref("Bienvenido Brian Emmanuel");
 const status = ref("Sin lugar apartado");
 
-import jettaImage from '@/assets/jetta.png';
-import corollaImage from '@/assets/corolla.png';
+import jettaImage from "@/assets/jetta.png";
+import corollaImage from "@/assets/corolla.png";
 
 const qrImages = ref<QRImage[]>([
   {
@@ -102,8 +113,8 @@ const qrImages = ref<QRImage[]>([
   },
 ]);
 
-const plate = ref('');
-const vehicleInfo = ref('');
+const plate = ref("");
+const vehicleInfo = ref("");
 
 onMounted(() => {
   plate.value = qrImages.value[0].plate;
@@ -123,13 +134,21 @@ const nextImage = () => {
   plate.value = qrImages.value[currentImageIndex.value].plate;
   vehicleInfo.value = qrImages.value[currentImageIndex.value].vehicleInfo;
 };
+
+const previousImage = () => {
+  currentImageIndex.value =
+    (currentImageIndex.value - 1 + qrImages.value.length) % qrImages.value.length;
+  plate.value = qrImages.value[currentImageIndex.value].plate;
+  vehicleInfo.value = qrImages.value[currentImageIndex.value].vehicleInfo;
+};
 </script>
 
 <style scoped>
-  .qr-image-container {
-    position: relative;
-    z-index: 50; /* Asegura que la imagen QR quede detrás del sidebar */
-  }
+.qr-image-container {
+  position: relative;
+  z-index: 50; /* Asegura que la imagen QR quede detrás del sidebar */
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s ease;
@@ -162,5 +181,4 @@ const nextImage = () => {
     font-size: 1rem; /* Adjust for small screens */
   }
 }
-
 </style>
