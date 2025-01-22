@@ -145,7 +145,7 @@ const handleSubmit = async () => {
     // Aquí iría la lógica de autenticación
     await new Promise((resolve) => setTimeout(resolve, 1500));
     console.log("Iniciando sesión con:", form);
-
+    localStorage.setItem('authToken', 'some-auth-token');
     // Ejemplo de redirección después del login exitoso
     router.push('/home')
   } catch (error) {
@@ -156,8 +156,11 @@ const handleSubmit = async () => {
 };
 
 const handleRegister = () => {
-  // Aquí iría la lógica de navegación al registro
-  console.log("Navegando a registro...");
+  try {
+    router.push('/register')
+  } catch (error) {
+    console.error("Error al registrar:", error);
+  }
 };
 </script>
 
