@@ -10,7 +10,8 @@
       PARKING ITQ
     </h1>
 
-    <div class="w-full sm:w-96 bg-white rounded-3xl shadow-lg p-8 mt-[10%]">
+    <!-- Caja blanca -->
+    <WhiteCard :height="'70vh'">
       <h2 class="text-2xl font-semibold text-center mb-6">INICIAR SESIÓN</h2>
 
       <form @submit.prevent="handleSubmit" class="space-y-6">
@@ -79,14 +80,15 @@
           </button>
         </div>
       </form>
-    </div>
+    </WhiteCard>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, reactive } from "vue";
 import { useRouter } from 'vue-router';
-
+import { defineComponent } from 'vue';
+import WhiteCard from "../components/WhiteCard.vue";
 interface FormData {
   numControl: string;
   password: string;
