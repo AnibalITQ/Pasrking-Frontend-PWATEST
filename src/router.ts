@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginForm from './Views/LoginForm.vue';
 import HomePage from './Views/HomePage.vue';
+import ProfilePage from './Views/ProfilePage/ProfilePage.vue';
+import { Component } from 'lucide-vue-next';
 const routes = [
   {
     path: '/',
@@ -11,6 +13,11 @@ const routes = [
     path: '/home',
     name :'home',
     component: HomePage,
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: ProfilePage,
   }
 ];
 

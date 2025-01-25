@@ -15,14 +15,14 @@
         </div>
         <h3>Menu</h3>
         <router-link class="button" to="/home">
-          <span class="material-icons">home</span>
-          <span class="text">Home</span>
+          <span class="material-icons">qr_code_2</span>
+          <span class="text">Mis QR</span>
         </router-link>
         <router-link class="button" to="/about">
           <span class="material-icons">directions_car</span>
           <span class="text">Estacionamiento</span>
         </router-link>
-        <router-link class="button" to="/Perfil">
+        <router-link class="button" to="/profile">
           <span class="material-icons">person</span>
           <span class="text">Perfil</span>
         </router-link>
@@ -88,7 +88,12 @@ const ToggleMenu = () => {
     transition: width 0.3s ease-out;
     z-index: 200;
     &.is-expanded {
-      width: 300px; /* Tamaño del menú expandido */
+      width: auto; /* Tamaño del menú expandido */
+    }
+
+    .logo {
+      display: flex;
+      justify-content: center;
     }
 
     .menu {
@@ -97,6 +102,7 @@ const ToggleMenu = () => {
       h3 {
         color: var(--light);
         font-size: 1rem;
+        margin-top: 1rem;
         margin-bottom: 1rem;
         text-transform: uppercase;
       }
@@ -118,7 +124,7 @@ const ToggleMenu = () => {
         &:hover {
           background-color: var(--grey);
           .material-icons {
-            color: var(--primary);
+            color: var(--light-orange);
           }
         }
       }
@@ -134,15 +140,22 @@ const ToggleMenu = () => {
     cursor: pointer;
     z-index: 200; /* Asegurar que esté encima del menú */
     transition: transform 0.3s ease-out;
+    outline: none;
 
     .material-icons {
       font-size: 2rem;
-      color: var(--light-orange);
+      color: var(--dark-black);
     }
 
     /* Animación del botón */
     &.is-expanded {
-      transform: translateX(300px); /* Mover el botón fuera del menú */
+      transform: rotate(-225deg); /* Mover el botón fuera del menú */
+    }
+
+    &:hover {
+        .material-icons {
+        color: var(--grey);
+      }
     }
   }
 }
