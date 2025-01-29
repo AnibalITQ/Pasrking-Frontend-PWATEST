@@ -1,16 +1,30 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginForm from './Views/LoginForm.vue';
 import HomePage from './Views/HomePage.vue';
+import RegisterForm from './Views/RegisterForm/RegisterForm.vue';
+
 const routes = [
   {
-    path: '/',
+    path: '/login',
     name: 'login',
     component: LoginForm,
   },
   {
     path: '/home',
-    name :'home',
+    name: 'home',
     component: HomePage,
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: RegisterForm,
+  },
+  {
+    path: '/',
+    redirect: () => {
+      const isAuthenticated = localStorage.getItem('authToken');
+      return isAuthenticated ? '/home' : '/login';
+    }
   }
 ];
 
