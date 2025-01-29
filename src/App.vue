@@ -1,7 +1,7 @@
 
 <template>
     <div class="app">
-      <Sidebar v-if="!isLoginPage" />
+      <Sidebar v-if="!isLoginPage && !isRegisterPage" />
       <router-view />
     </div>
 </template>
@@ -19,9 +19,10 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const isLoginPage = computed(() => route.name === 'login');
-
+	const isRegisterPage = computed(() => route.name === 'register');
     return {
       isLoginPage,
+	  isRegisterPage,
     };
   },
 });
