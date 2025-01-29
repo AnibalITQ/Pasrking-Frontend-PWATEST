@@ -13,7 +13,10 @@
       <form @submit.prevent="handleSubmit" class="space-y-6">
         <!-- Campo: Número de control -->
         <div>
-          <label for="numControl" class="block text-sm font-semibold text-gray-700 mb-1">
+          <label
+            for="numControl"
+            class="block text-sm font-semibold text-gray-700 mb-1"
+          >
             Número de Control
           </label>
           <input
@@ -21,8 +24,7 @@
             v-model="form.numControl"
             type="text"
             required
-            class="w-full px-3 py-2 border-b border-gray-300 
-                   focus:border-orange-500 outline-none transition-colors"
+            class="w-full px-3 py-2 border-b border-gray-300 focus:border-orange-500 outline-none transition-colors"
             :class="{ 'border-red-500': errors.numControl }"
           />
           <p v-if="errors.numControl" class="mt-1 text-sm text-red-500">
@@ -32,7 +34,10 @@
 
         <!-- Campo: Nombre -->
         <div>
-          <label for="nombre" class="block text-sm font-semibold text-gray-700 mb-1">
+          <label
+            for="nombre"
+            class="block text-sm font-semibold text-gray-700 mb-1"
+          >
             Nombre
           </label>
           <input
@@ -40,8 +45,7 @@
             v-model="form.nombre"
             type="text"
             required
-            class="w-full px-3 py-2 border-b border-gray-300
-                   focus:border-orange-500 outline-none transition-colors"
+            class="w-full px-3 py-2 border-b border-gray-300 focus:border-orange-500 outline-none transition-colors"
             :class="{ 'border-red-500': errors.nombre }"
           />
           <p v-if="errors.nombre" class="mt-1 text-sm text-red-500">
@@ -51,7 +55,10 @@
 
         <!-- Campo: Apellidos -->
         <div>
-          <label for="apellidos" class="block text-sm font-semibold text-gray-700 mb-1">
+          <label
+            for="apellidos"
+            class="block text-sm font-semibold text-gray-700 mb-1"
+          >
             Apellidos
           </label>
           <input
@@ -59,8 +66,7 @@
             v-model="form.apellidos"
             type="text"
             required
-            class="w-full px-3 py-2 border-b border-gray-300
-                   focus:border-orange-500 outline-none transition-colors"
+            class="w-full px-3 py-2 border-b border-gray-300 focus:border-orange-500 outline-none transition-colors"
             :class="{ 'border-red-500': errors.apellidos }"
           />
           <p v-if="errors.apellidos" class="mt-1 text-sm text-red-500">
@@ -70,42 +76,75 @@
 
         <!-- Campo: Contraseña -->
         <div>
-          <label for="password" class="block text-sm font-semibold text-gray-700 mb-1">
+          <label
+            for="password"
+            class="block text-sm font-semibold text-gray-700 mb-1"
+          >
             Contraseña
           </label>
-          <input
-            id="password"
-            v-model="form.password"
-            type="password"
-            required
-            class="w-full px-3 py-2 border-b border-gray-300
-                   focus:border-orange-500 outline-none transition-colors"
-            :class="{ 'border-red-500': errors.password }"
-          />
-          <p v-if="errors.password" class="mt-1 text-sm text-red-500">
-            {{ errors.password }}
-          </p>
+
+          <!-- Contenedor "relative" para posicionar el ícono -->
+          <div class="relative">
+            <input
+              id="password"
+              v-model="form.password"
+              :type="showPassword ? 'text' : 'password'"
+              required
+              class="w-full px-3 py-2 border-b border-gray-300 focus:border-orange-500 outline-none transition-colors"
+              :class="{ 'border-red-500': errors.password }"
+            />
+            <p v-if="errors.password" class="mt-1 text-sm text-red-500">
+              {{ errors.password }}
+            </p>
+
+            <!-- Botón o ícono de Material Icons para togglear la contraseña -->
+            <button
+              type="button"
+              @click="toggleShowPassword"
+              class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+            >
+              <span class="material-icons">
+                {{ showPassword ? "visibility_off" : "visibility" }}
+              </span>
+            </button>
+          </div>
         </div>
 
-        <!-- Campo: Confirmar contraseña -->
+        <!-- Campo: Confirmar Contraseña -->
         <div>
-          <label for="passwordConfirm" class="block text-sm font-semibold text-gray-700 mb-1">
+          <label
+            for="passwordConfirm"
+            class="block text-sm font-semibold text-gray-700 mb-1"
+          >
             Confirmar Contraseña
           </label>
-          <input
-            id="passwordConfirm"
-            v-model="form.passwordConfirm"
-            type="password"
-            required
-            class="w-full px-3 py-2 border-b border-gray-300
-                   focus:border-orange-500 outline-none transition-colors"
-            :class="{ 'border-red-500': errors.passwordConfirm }"
-          />
-          <p v-if="errors.passwordConfirm" class="mt-1 text-sm text-red-500">
-            {{ errors.passwordConfirm }}
-          </p>
-        </div>
 
+          <div class="relative">
+            <input
+              id="passwordConfirm"
+              v-model="form.passwordConfirm"
+              :type="showPasswordConfirm ? 'text' : 'password'"
+              required
+              class="w-full px-3 py-2 border-b border-gray-300 focus:border-orange-500 outline-none transition-colors"
+              :class="{ 'border-red-500': errors.passwordConfirm }"
+            />
+            <p v-if="errors.passwordConfirm" class="mt-1 text-sm text-red-500">
+              {{ errors.passwordConfirm }}
+            </p>
+
+            <!-- Segundo ícono de Material Icons -->
+            <button
+              type="button"
+              @click="toggleShowPasswordConfirm"
+              class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
+            >
+              <span class="material-icons">
+                {{ showPasswordConfirm ? "visibility_off" : "visibility" }}
+              </span>
+            </button>
+          </div>
+        </div>
+        
         <!-- Sección de autos -->
         <div>
           <label class="block text-sm font-semibold text-gray-700 mb-1">
@@ -131,11 +170,13 @@
                 v-model="car.placas"
                 type="text"
                 required
-                class="w-full px-3 py-2 border-b border-gray-300
-                       focus:border-orange-500 outline-none transition-colors"
+                class="w-full px-3 py-2 border-b border-gray-300 focus:border-orange-500 outline-none transition-colors"
                 :class="{ 'border-red-500': carErrors[index]?.placas }"
               />
-              <p v-if="carErrors[index]?.placas" class="mt-1 text-sm text-red-500">
+              <p
+                v-if="carErrors[index]?.placas"
+                class="mt-1 text-sm text-red-500"
+              >
                 {{ carErrors[index].placas }}
               </p>
             </div>
@@ -149,11 +190,13 @@
                 v-model="car.modelo"
                 type="text"
                 required
-                class="w-full px-3 py-2 border-b border-gray-300
-                       focus:border-orange-500 outline-none transition-colors"
+                class="w-full px-3 py-2 border-b border-gray-300 focus:border-orange-500 outline-none transition-colors"
                 :class="{ 'border-red-500': carErrors[index]?.modelo }"
               />
-              <p v-if="carErrors[index]?.modelo" class="mt-1 text-sm text-red-500">
+              <p
+                v-if="carErrors[index]?.modelo"
+                class="mt-1 text-sm text-red-500"
+              >
                 {{ carErrors[index].modelo }}
               </p>
             </div>
@@ -167,11 +210,13 @@
                 v-model="car.year"
                 type="text"
                 required
-                class="w-full px-3 py-2 border-b border-gray-300
-                       focus:border-orange-500 outline-none transition-colors"
+                class="w-full px-3 py-2 border-b border-gray-300 focus:border-orange-500 outline-none transition-colors"
                 :class="{ 'border-red-500': carErrors[index]?.year }"
               />
-              <p v-if="carErrors[index]?.year" class="mt-1 text-sm text-red-500">
+              <p
+                v-if="carErrors[index]?.year"
+                class="mt-1 text-sm text-red-500"
+              >
                 {{ carErrors[index].year }}
               </p>
             </div>
@@ -185,11 +230,13 @@
                 v-model="car.color"
                 type="text"
                 required
-                class="w-full px-3 py-2 border-b border-gray-300
-                       focus:border-orange-500 outline-none transition-colors"
+                class="w-full px-3 py-2 border-b border-gray-300 focus:border-orange-500 outline-none transition-colors"
                 :class="{ 'border-red-500': carErrors[index]?.color }"
               />
-              <p v-if="carErrors[index]?.color" class="mt-1 text-sm text-red-500">
+              <p
+                v-if="carErrors[index]?.color"
+                class="mt-1 text-sm text-red-500"
+              >
                 {{ carErrors[index].color }}
               </p>
             </div>
@@ -207,8 +254,7 @@
           <button
             type="button"
             @click="handleNewCar"
-            class="w-full sm:w-1/2 px-6 py-3 bg-gray-700 text-white 
-                   rounded-full hover:bg-gray-800 transition-colors"
+            class="w-full sm:w-1/2 px-6 py-3 bg-gray-700 text-white rounded-full hover:bg-gray-800 transition-colors"
           >
             Agregar Auto
           </button>
@@ -217,8 +263,7 @@
           <button
             type="submit"
             :disabled="isLoading"
-            class="w-full sm:w-1/2 px-6 py-3 bg-orange-500 text-white
-                   rounded-full hover:bg-orange-600 transition-colors disabled:opacity-50"
+            class="w-full sm:w-1/2 px-6 py-3 bg-orange-500 text-white rounded-full hover:bg-orange-600 transition-colors disabled:opacity-50"
           >
             {{ isLoading ? "Cargando..." : "Registrarse" }}
           </button>
@@ -229,18 +274,26 @@
 </template>
 
 <script setup lang="ts">
-/**
- * Se importa el hook personalizado que maneja
- * toda la lógica del formulario y validaciones.
- */
-import { useRegisterForm } from './RegisterForm';
+import { ref } from "vue";
+import { useRegisterForm } from "./RegisterForm";
 
-const {
-  form,          // Datos del formulario (numControl, nombre, apellidos, etc.)
-  errors,        // Mensajes de error a nivel de campos individuales
-  carErrors,     // Mensajes de error específicos de cada auto
-  handleNewCar,  // Función para añadir un nuevo auto al formulario
-  handleSubmit,  // Función que se ejecuta al enviar el formulario
-  isLoading      // Bandera para indicar si se está procesando el envío
-} = useRegisterForm();
+const { form, errors, carErrors, handleNewCar, handleSubmit, isLoading } =
+  useRegisterForm();
+
+/**
+ * Banderas reactivas para cada campo de contraseña
+ */
+const showPassword = ref(false);
+const showPasswordConfirm = ref(false);
+
+/**
+ * Funciones para alternar la visibilidad de la contraseña
+ */
+const toggleShowPassword = () => {
+  showPassword.value = !showPassword.value;
+};
+
+const toggleShowPasswordConfirm = () => {
+  showPasswordConfirm.value = !showPasswordConfirm.value;
+};
 </script>
