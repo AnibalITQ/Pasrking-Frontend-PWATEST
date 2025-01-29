@@ -1,17 +1,20 @@
 <template>
-  <div
-    class="min-h-screen w-full bg-gray-100 flex items-center justify-center p-4"
+ <div
+    class="min-h-screen w-full bg-gray-100 flex flex-col items-center justify-center p-4"
   >
-    <div
-      class="bg-white rounded-lg shadow-lg overflow-y-auto w-full max-w-md h-[80vh] sm:h-[70vh] min-h-[500px] mx-auto"
-    >
-      <!-- Header -->
-      <div class="p-4 text-[#2E4057] flex items-center justify-center">
+  <div class="text-[#2E4057] flex items-center justify-center">
         <h1 class="text-2xl sm:text-xl font-semibold">{{ welcomeMessage }}</h1>
       </div>
-      <div class="p-4 flex items-center justify-center">
+    <!-- Contenedor principal blanco -->
+    <div
+      class="p-4 bg-white rounded-lg shadow-lg overflow-y-auto w-full max-w-md h-[80vh] sm:h-[70vh] min-h-[500px] mx-auto"
+      @click="handleContainerClick"
+    >
+      <!-- Header -->
+      <div class="flex items-center justify-center">
         <p class="text-xl sm:text-lg text-[#396296]">{{ status }}</p>
       </div>
+
       <!-- QR Code Gallery -->
       <div
         class="qr-image-container relative aspect-square w-full max-w-[300px] mx-auto my-4 sm:my-2"
@@ -23,12 +26,12 @@
             :src="qrImages[currentImageIndex].url"
             :alt="qrImages[currentImageIndex].alt"
             class="w-full h-full object-contain"
-            @click="nextImage"
           />
         </transition>
       </div>
+
       <!-- Parking Information -->
-      <div class="p-4">
+      <div class="">
         <div class="mb-4">
           <h2 class="text-2xl sm:text-xl font-bold text-gray-800">
             {{ plate }}
@@ -51,7 +54,7 @@
         </div>
       </div>
 
-      <!-- Carousel Navigation Buttons -->
+      <!-- Se elimina la sección de botones de navegación
       <div class="flex justify-between p-4 border-t border-gray-200">
         <button
           @click="previousImage"
@@ -66,13 +69,13 @@
           Siguiente
         </button>
       </div>
+      -->
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
-import { CarIcon, UserIcon } from "lucide-vue-next";
 
 interface Location {
   name: string;
@@ -86,7 +89,7 @@ interface QRImage {
   vehicleInfo: string;
 }
 
-const welcomeMessage = ref("Bienvenido Brian Emmanuel");
+const welcomeMessage = ref("Bienvenido Brian");
 const status = ref("Sin lugar apartado");
 
 import jettaImage from "@/assets/jetta.png";
@@ -140,6 +143,25 @@ const previousImage = () => {
     (currentImageIndex.value - 1 + qrImages.value.length) % qrImages.value.length;
   plate.value = qrImages.value[currentImageIndex.value].plate;
   vehicleInfo.value = qrImages.value[currentImageIndex.value].vehicleInfo;
+};
+
+/**
+ * Detecta si el usuario hizo clic en la mitad izquierda o en la mitad derecha
+ * del contenedor para navegar a la imagen anterior o siguiente.
+ */
+const handleContainerClick = (event: MouseEvent) => {
+  // Obtener el rectángulo del contenedor
+  const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
+  // Posición del clic dentro del contenedor
+  const clickX = event.clientX - rect.left;
+  
+  if (clickX < rect.width / 2) {
+    // Mitad izquierda
+    previousImage();
+  } else {
+    // Mitad derecha
+    nextImage();
+  }
 };
 </script>
 
