@@ -1,7 +1,7 @@
 
 <template>
     <div class="app">
-      <Sidebar v-if="!isLoginPage" />
+      <Sidebar v-if="!isLoginPage && !isRegisterPage" />
       <router-view />
     </div>
 </template>
@@ -19,9 +19,10 @@ export default defineComponent({
   setup() {
     const route = useRoute();
     const isLoginPage = computed(() => route.name === 'login');
-
+	const isRegisterPage = computed(() => route.name === 'register');
     return {
       isLoginPage,
+	  isRegisterPage,
     };
   },
 });
@@ -31,12 +32,13 @@ export default defineComponent({
 :root {
 	--primary: #4ade80;
 	--primary-alt: #22c55e;
-	--grey: #64748b;
+	--grey: #a7a7a7;
 	--dark: #002f6e;
 	--dark-alt: #334155;
 	--orange:#EC8013;
 	--light-orange: #F2A14E;
-	--light: #f1f5f9;
+	--light: #fdfdfd;
+	--dark-black: #000000;
 	--sidebar-width: 200px;
 }
 
