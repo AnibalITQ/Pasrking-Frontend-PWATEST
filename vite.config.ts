@@ -11,15 +11,53 @@ export default defineConfig({
       manifest: {
         name: 'Parking ITQ',
         short_name: 'Parking',
+        description: 'Gestión inteligente de estacionamientos para el ITQ',
+        lang: 'es-ES',
         start_url: '/',
+        scope: '/',
         display: 'standalone',
+        orientation: 'portrait',
         background_color: '#E5700F',
         theme_color: '#E5700F',
         icons: [
           {
-            "src": "public/ITQ_LOGO.svg",
-            "sizes": "192x192",
-            "type": "image/svg+xml"
+            src: '/icons/icon-72x72.png',
+            sizes: '72x72',
+            type: 'image/png'
+          },
+          {
+            src: '/icons/icon-96x96.png',
+            sizes: '96x96',
+            type: 'image/png'
+          },
+          {
+            src: '/icons/icon-128x128.png',
+            sizes: '128x128',
+            type: 'image/png'
+          },
+          {
+            src: '/icons/icon-192x192.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: '/icons/icon-512x512.png',
+            sizes: '512x512',
+            type: 'image/png'
+          }
+        ],
+        // Ejemplo de accesos directos
+        shortcuts: [
+          {
+            name: "Mis QR",
+            short_name: "Mis QR",
+            description: "Accede rápidamente a tus códigos QR",
+            url: "/home",
+            icons: [{
+              src: "/icons/logo.png",
+              sizes: "192x192",
+              type: "image/png"
+            }]
           }
         ]
       }
